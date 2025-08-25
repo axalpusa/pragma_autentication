@@ -27,27 +27,27 @@ public class MyReactiveRepositoryAdapter extends ReactiveAdapterOperations<
 
 
     @Override
-    public Mono<User> findByIdUser(Long idUser) {
-        return repository.findByIdUser(idUser);
+    public Mono<Boolean> userExistsByEmailAddress(String emailAddress) {
+        return repository.userExistsByEmailAddress(emailAddress);
     }
 
     @Override
-    public Mono<User> saveUser(User user) {
-       return repository.saveUser(user);
+    public Mono<Boolean> userExistsByIdUser(Long idUser) {
+        return repository.userExistsByIdUser(idUser);
+    }
+
+    @Override
+    public Mono<User> update(User user) {
+        return repository.update(user);
+    }
+
+    @Override
+    public Mono<User> findByEmailAddress(String emailAddress) {
+        return repository.findByEmailAddress(emailAddress);
     }
 
     @Override
     public Mono<Void> deleteUserByIdUser(Long idUser) {
         return repository.deleteUserByIdUser(idUser);
-    }
-
-    @Override
-    public Mono<Boolean> existEmailAddress(String emailAddress) {
-        return repository.existEmailAddress(emailAddress);
-    }
-
-    @Override
-    public Flux<User> findAllUsers() {
-        return repository.findAllUsers();
     }
 }

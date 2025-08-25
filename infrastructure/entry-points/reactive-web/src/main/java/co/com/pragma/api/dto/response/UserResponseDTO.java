@@ -11,7 +11,7 @@ public record UserResponseDTO(
         String address,
         String documentId,
         Timestamp birthDate, String phoneNumber,
-        BigDecimal baseSalary//,
-        //Rol rol
+        BigDecimal baseSalary,
+        Long idRol
 ) {
 }

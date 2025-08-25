@@ -1,10 +1,11 @@
 package co.com.pragma.api;
 
-import co.com.pragma.api.dto.request.CreateUserDTO;
+import co.com.pragma.api.dto.request.UserRequestDTO;
 import co.com.pragma.api.mapper.UserMapperDTO;
 import co.com.pragma.usecase.user.UserUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
@@ -16,8 +17,9 @@ public class Handler {
     private final RequestValidator requestValidator;
     private final UserMapperDTO userMapperDTO;
 
+    @Transactional
     public Mono<ServerResponse> saveUserCase(ServerRequest serverRequest) {
-        return serverRequest.bodyToMono(CreateUserDTO.class)
+        return serverRequest.bodyToMono(UserRequestDTO.class)
                 .flatMap(requestValidator::validate)     //  validar DTO
                 .map(userMapperDTO::toModel)             //  mapear DTO → dominio
                 .flatMap(userUseCase::saveUser)          //  ejecutar caso de uso

@@ -5,13 +5,12 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface UserRepository {
-    Mono<User> findByIdUser(Long idUser);
-
-    Mono<User> saveUser(User user);
-
+    Mono<Boolean> userExistsByEmailAddress(String emailAddress);
+    Mono<Boolean> userExistsByIdUser(Long idUser);
+    Mono<User> save(User user);
+    Mono<User> update(User user);
+    Mono<User> findById(Long idUser);
+    Mono<User> findByEmailAddress(String emailAddress);
     Mono<Void> deleteUserByIdUser(Long idUser);
-
-    Mono<Boolean> existEmailAddress(String emailAddress);
-
-    Flux<User> findAllUsers();
+    Flux<User> findAll();
 }
