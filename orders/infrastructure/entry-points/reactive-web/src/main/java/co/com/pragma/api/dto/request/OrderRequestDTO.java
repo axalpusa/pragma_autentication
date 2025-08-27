@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 @Data
 public class OrderRequestDTO {
 
-    @NotNull(message = "Mount is required")
-    BigDecimal mount;
+    @NotNull(message = "Amount is required")
+    BigDecimal amount;
 
     @NotNull(message = "Term months is required")
     @Positive(message = "The term months must be greater than 0")

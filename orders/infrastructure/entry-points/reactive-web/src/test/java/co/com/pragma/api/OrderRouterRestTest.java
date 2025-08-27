@@ -54,7 +54,7 @@ class OrderRouterRestTest {
     private OrderRequestDTO buildRequest() {
         System.out.println ( "Init buildRequest" );
         OrderRequestDTO req = new OrderRequestDTO ( );
-        req.setMount ( new BigDecimal ( "1000" ) );
+        req.setAmount ( new BigDecimal ( "1000" ) );
         req.setDocumentId ( "48295730" );
         req.setEmailAddress ( "axalpusa1125@gmail.com" );
         req.setTermMonths ( 12 );
@@ -72,7 +72,7 @@ class OrderRouterRestTest {
         System.out.println ( "Init buildModelFromReq" );
         return Order.builder ( )
                 .idOrder ( null )
-                .mount ( req.getMount ( ) )
+                .amount ( req.getAmount ( ) )
                 .documentId ( req.getDocumentId ( ) )
                 .emailAddress ( req.getEmailAddress ( ) )
                 .emailAddress ( req.getEmailAddress ( ) )
@@ -115,7 +115,7 @@ class OrderRouterRestTest {
         Order saved = toSave.toBuilder ( ).build ( );
         OrderResponseDTO response = new OrderResponseDTO ( );
         response.setIdOrder ( saved.getIdOrder ( ) );
-        response.setMount ( saved.getMount ( ) );
+        response.setAmount ( saved.getAmount ( ) );
         response.setTermMonths ( saved.getTermMonths ( ) );
         response.setIdTypeLoan ( saved.getIdTypeLoan ( ) );
         response.setEmailAddress ( saved.getEmailAddress ( ) );

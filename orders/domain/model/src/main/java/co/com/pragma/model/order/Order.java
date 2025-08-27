@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @Builder(toBuilder = true)
 public class Order {
     private Long idOrder;
-    private BigDecimal mount;
+    private BigDecimal amount;
     private Integer termMonths;
     private String documentId;
     private String emailAddress;

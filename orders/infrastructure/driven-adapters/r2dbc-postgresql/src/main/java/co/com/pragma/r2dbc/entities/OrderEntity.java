@@ -21,8 +21,8 @@ public class OrderEntity {
     @Column("id_order")
     private Long idOrder;
 
-    @Column("mount")
-    private BigDecimal mount;
+    @Column("amount")
+    private BigDecimal amount;
 
     @Column("term_months")
     private Integer termMonths;

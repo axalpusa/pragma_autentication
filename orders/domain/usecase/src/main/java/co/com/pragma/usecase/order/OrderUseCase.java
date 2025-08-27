@@ -29,7 +29,7 @@ public class OrderUseCase implements IOrderUseCase {
         return typeLoanRepository.getByIdTypeLoan ( order.getIdTypeLoan ( ).longValue ( ) )
                 .switchIfEmpty ( Mono.error ( new IllegalArgumentException ( "Type loan not found." ) ) )
                 .flatMap ( typeLoan ->
-                        typeloanUseCase.validateTypeLoan ( typeLoan, order.getMount ( ) )
+                        typeloanUseCase.validateTypeLoan ( typeLoan, order.getAmount ( ) )
                                 .flatMap ( isValid -> {
                                     if ( !isValid ) {
                                         return Mono.error ( new IllegalArgumentException ( "El monto no está dentro del rango permitido" ) );

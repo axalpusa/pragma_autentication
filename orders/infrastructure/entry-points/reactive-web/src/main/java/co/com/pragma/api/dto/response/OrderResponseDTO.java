@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class OrderResponseDTO {
     Long idOrder;
-    BigDecimal mount;
+    BigDecimal amount;
     Integer termMonths;
     String documentId;
     String emailAddress;

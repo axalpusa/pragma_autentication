@@ -17,7 +17,7 @@ create table type_loan
 create table orders
 (
     id_order      SERIAL PRIMARY KEY,
-    mount         decimal(12, 2),
+    amount         decimal(12, 2),
     term_months   integer,
     document_id   varchar(15),
     email_address varchar(200) UNIQUE,
