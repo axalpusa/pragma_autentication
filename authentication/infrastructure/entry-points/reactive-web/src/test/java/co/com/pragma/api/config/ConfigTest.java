@@ -33,7 +33,7 @@ class ConfigTest {
     @TestConfiguration
     static class MockBeans {
         @Bean
-        IUserUseCase registrarUsuarioUseCase() {
+        IUserUseCase saveUserUseCase() {
             return mock ( IUserUseCase.class );
         }
 
@@ -43,7 +43,7 @@ class ConfigTest {
         }
 
         @Bean
-        UserMapperDTO usuarioDTOMapper() {
+        UserMapperDTO userDTOMapper() {
             return mock ( UserMapperDTO.class );
         }
     }

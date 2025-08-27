@@ -77,9 +77,8 @@ public class Handler {
                         .bodyValue ( u ) );
     }
     /**
-     * Registers the user and prepares the server response.
+     * Get all users.
      *
-     * @param request the validated user request DTO
      * @return a Mono containing the ServerResponse with all users
      */
     public Mono < ServerResponse > getAllUsers(ServerRequest request) {

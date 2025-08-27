@@ -182,7 +182,6 @@ class UserRouterHandlerTest {
                 .expectBody ( )
                 .jsonPath ( "$.error" ).isNotEmpty ( );
         System.out.println ( "End case validation error" );
-
     }
 
     /**

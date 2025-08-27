@@ -43,7 +43,7 @@ public class RouterRest {
             )
     })
     public RouterFunction < ServerResponse > routerFunction(Handler handler) {
-        return route ( GET ( "/api/v1/all" ), handler::getAllUsers )
+        return route ( GET ( "/api/v1/usuarios/all" ), handler::getAllUsers )
                 .andRoute ( POST ( "/api/v1/usuarios" ), handler::saveUserCase );
     }
 }

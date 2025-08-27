@@ -26,7 +26,7 @@ public class UseCasesConfigTest {
                     .filter ( name -> name.endsWith ( "UseCase" ) )
                     .count ( );
 
-            assertTrue ( count > 0, "No se encontraron beans que terminen en 'UseCase'" );
+            assertTrue ( count > 0, "No beans ending with 'Use Case' were found'" );
         }
     }
 

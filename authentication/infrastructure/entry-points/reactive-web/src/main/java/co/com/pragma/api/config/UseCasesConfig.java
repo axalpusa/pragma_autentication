@@ -6,8 +6,8 @@ import co.com.pragma.usecase.user.interfaces.IUserUseCase;
 import org.springframework.context.annotation.Bean;
 
 public class UseCasesConfig {
-    @Bean
+    /*@Bean
     public IUserUseCase userUseCase(UserRepository repository) {
         return new UserUserCase (repository);
-    }
+    }*/
 }
