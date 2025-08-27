@@ -37,8 +37,8 @@ public class Handler {
     public Mono < ServerResponse > saveUserCase(ServerRequest request) {
         return request.bodyToMono ( UserRequestDTO.class )
                 .switchIfEmpty ( Mono.error ( new IllegalArgumentException ( "Request body cannot be empty" ) ) )
-                .flatMap ( this::validarUsuarioRequest )
-                .flatMap ( this::registrarYResponder );
+                .flatMap ( this::validateUserRequest )
+                .flatMap ( this::saveAndRequest );
     }
 
     /**
@@ -48,7 +48,7 @@ public class Handler {
      * @return a Mono containing the validated DTO
      * @throws ConstraintViolationException if any validation errors occur
      */
-    private Mono < UserRequestDTO > validarUsuarioRequest(UserRequestDTO dto) {
+    private Mono < UserRequestDTO > validateUserRequest(UserRequestDTO dto) {
         Set < ConstraintViolation < UserRequestDTO > > violations = validator.validate ( dto );
         if ( !violations.isEmpty ( ) ) {
             String errorMsg = violations.stream ( )
@@ -67,7 +67,7 @@ public class Handler {
      * @param dto the validated user request DTO
      * @return a Mono containing the ServerResponse with the saved user
      */
-    private Mono < ServerResponse > registrarYResponder(UserRequestDTO dto) {
+    private Mono < ServerResponse > saveAndRequest(UserRequestDTO dto) {
         User user = userMapperDTO.toModel ( dto );
         return userUseCase.saveUser ( user )
                 .doOnSuccess ( u -> log.info ( "User successfully registered: {}", u ) )
@@ -76,7 +76,12 @@ public class Handler {
                         .contentType ( MediaType.APPLICATION_JSON )
                         .bodyValue ( u ) );
     }
-
+    /**
+     * Registers the user and prepares the server response.
+     *
+     * @param request the validated user request DTO
+     * @return a Mono containing the ServerResponse with all users
+     */
     public Mono < ServerResponse > getAllUsers(ServerRequest request) {
         return ServerResponse.ok ( )
                 .body ( userUseCase.getAllUsers ( ), User.class );

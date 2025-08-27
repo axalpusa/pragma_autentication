@@ -1,7 +1,7 @@
-package co.com.pragma.api;
+package co.com.pragma.api.routerrest;
 
-import co.com.pragma.api.dto.request.UserRequestDTO;
-import co.com.pragma.api.dto.response.UserResponseDTO;
+import co.com.pragma.api.dto.request.OrderRequestDTO;
+import co.com.pragma.api.handler.OrderHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -21,29 +21,29 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Configuration
-public class RouterRest {
+public class TypeLoanRouterRest {
     @Bean
     @RouterOperations({
             @RouterOperation(
-                    path = "/api/v1/usuarios",
+                    path = "/api/v1/tipoPrestamo",
                     produces = {MediaType.APPLICATION_JSON_VALUE},
                     method = RequestMethod.POST,
-                    beanClass = Handler.class,
-                    beanMethod = "saveUserCase",
+                    beanClass = OrderHandler.class,
+                    beanMethod = "getTypeLoan",
                     operation = @Operation(
-                            operationId = "saveUserCase",
-                            summary = "Register a user",
-                            requestBody = @RequestBody(required = true, content = @Content(schema = @Schema(implementation = UserRequestDTO.class))),
+                            operationId = "getTypeLoan",
+                            summary = "Get type loan",
+                            requestBody = @RequestBody(required = true, content = @Content(schema = @Schema(implementation = OrderRequestDTO.class))),
                             responses = {
-                                    @ApiResponse(responseCode = "200", description = "Registered user",
-                                            content = @Content(schema = @Schema(implementation = UserResponseDTO.class))),
+                                    @ApiResponse(responseCode = "200", description = "Registered order",
+                                            content = @Content(schema = @Schema(implementation = OrderRequestDTO.class))),
                                     @ApiResponse(responseCode = "400", description = "Invalid request")
                             }
                     )
             )
     })
-    public RouterFunction < ServerResponse > routerFunction(Handler handler) {
-        return route ( GET ( "/api/v1/all" ), handler::getAllUsers )
-                .andRoute ( POST ( "/api/v1/usuarios" ), handler::saveUserCase );
+    public RouterFunction<ServerResponse> routerFunction(OrderHandler orderHandler) {
+        return route(GET("/api/v1/all"), orderHandler::getAllOrders)
+                .andRoute(POST("/api/v1/tipoPrestamo"), orderHandler::saveOrderCase);
     }
 }

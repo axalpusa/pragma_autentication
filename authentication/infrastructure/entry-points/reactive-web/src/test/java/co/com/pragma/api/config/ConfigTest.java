@@ -51,7 +51,7 @@ class ConfigTest {
     @Test
     void securityHeadersShouldBePresent() {
         webTestClient.post ( )
-                .uri ( "/api/v1/user/save" )
+                .uri ( "/api/v1/usuarios" )
                 .bodyValue ( "{}" )
                 .exchange ( )
                 .expectStatus ( ).is4xxClientError ( )

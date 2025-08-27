@@ -124,7 +124,7 @@ class UserRouterHandlerTest {
      * Save user correct.
      */
     @Test
-    @DisplayName("POST /api/v1/user/save - exito")
+    @DisplayName("POST /api/v1/usuarios - exito")
     void saveUserCorrect() {
         System.out.println ( "Init case save user correct" );
         UserRequestDTO req = buildRequest ( );
@@ -146,7 +146,7 @@ class UserRouterHandlerTest {
         when ( userMapper.toResponse ( any ( User.class ) ) ).thenReturn ( response );
 
         webTestClient.post ( )
-                .uri ( "/api/v1/user/save" )
+                .uri ( "/api/v1/usuarios" )
                 .contentType ( MediaType.APPLICATION_JSON )
                 .bodyValue ( req )
                 .exchange ( )
@@ -162,7 +162,7 @@ class UserRouterHandlerTest {
      * Validation error
      */
     @Test
-    @DisplayName("POST /api/v1/user/save - calidation_error")
+    @DisplayName("POST /api/v1/usuarios - calidation_error")
     void saveUserValidationError() {
         System.out.println ( "Init casevalidation error" );
         @SuppressWarnings("unchecked")
@@ -174,7 +174,7 @@ class UserRouterHandlerTest {
         req.setFirstName ( "" );
 
         webTestClient.post ( )
-                .uri ( "/api/v1/user/save" )
+                .uri ( "/api/v1/usuarios" )
                 .contentType ( MediaType.APPLICATION_JSON )
                 .bodyValue ( req )
                 .exchange ( )
@@ -189,7 +189,7 @@ class UserRouterHandlerTest {
      * Exist Email Address.
      */
     @Test
-    @DisplayName("POST /api/v1/user/save - exist_mail_address")
+    @DisplayName("POST /api/v1/usuarios - exist_mail_address")
     void saveUserExistEmailAddress() {
         System.out.println ( "Init case exist email address" );
         UserRequestDTO req = buildRequest ( );
@@ -199,7 +199,7 @@ class UserRouterHandlerTest {
                 .thenReturn ( Mono.error ( new IllegalArgumentException ( "Email address duplicate." ) ) );
 
         webTestClient.post ( )
-                .uri ( "/api/v1/user/save" )
+                .uri ( "/api/v1/usuarios" )
                 .contentType ( MediaType.APPLICATION_JSON )
                 .bodyValue ( req )
                 .exchange ( )
