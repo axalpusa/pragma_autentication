@@ -1,44 +1,43 @@
 package co.com.pragma.config;
 
+import co.com.pragma.model.order.gateways.OrderRepository;
+import co.com.pragma.model.typeloan.gateways.TypeLoanRepository;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UseCasesConfigTest {
 
     @Test
-    void testUseCaseBeansExist() {
-        try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(TestConfig.class)) {
-            String[] beanNames = context.getBeanDefinitionNames();
+    void testAllUseCaseBeansExist() {
+        try (AnnotationConfigApplicationContext context =
+                     new AnnotationConfigApplicationContext ( TestConfig.class )) {
+            String[] beanNames = context.getBeanDefinitionNames ( );
 
-            boolean useCaseBeanFound = false;
-            for (String beanName : beanNames) {
-                if (beanName.endsWith("UseCase")) {
-                    useCaseBeanFound = true;
-                    break;
-                }
-            }
-
-            assertTrue(useCaseBeanFound, "No beans ending with 'Use Case' were found");
+            long count = Arrays.stream ( beanNames )
+                    .filter ( name -> name.endsWith ( "UseCase" ) )
+                    .count ( );
+            assertTrue ( count > 0, "No beans ending with 'Use Case' were found" );
         }
     }
 
     @Configuration
     @Import(UseCasesConfig.class)
     static class TestConfig {
-
         @Bean
-        public MyUseCase myUseCase() {
-            return new MyUseCase();
+        public OrderRepository orderRepository() {
+            return Mockito.mock ( OrderRepository.class );
         }
-    }
-
-    static class MyUseCase {
-        public String execute() {
-            return "MyUseCase Test";
+        @Bean
+        public TypeLoanRepository typeLoanRepository() {
+            return Mockito.mock ( TypeLoanRepository.class );
         }
     }
 }

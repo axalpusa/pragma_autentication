@@ -1,9 +1,10 @@
 package co.com.pragma.api.dto.request;
 
 import jakarta.validation.constraints.*;
+import lombok.Data;
 
 import java.math.BigDecimal;
-
+@Data
 public class OrderRequestDTO {
 
     @NotNull(message = "Mount is required")

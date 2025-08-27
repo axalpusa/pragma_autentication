@@ -19,5 +19,5 @@ public class TypeLoan {
     private BigDecimal minimumAmount;
     private BigDecimal maximumAmount;
     private BigDecimal interestRate;
-    private String automaticValidation;
+    private Boolean automaticValidation;
 }

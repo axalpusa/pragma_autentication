@@ -1,11 +1,12 @@
 package co.com.pragma.api.routerrest;
 
-import co.com.pragma.api.dto.request.OrderRequestDTO;
-import co.com.pragma.api.handler.OrderHandler;
+import co.com.pragma.api.dto.response.TypeLoanResponseDTO;
+import co.com.pragma.api.handler.TypeLoanHandler;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springdoc.core.annotations.RouterOperation;
 import org.springdoc.core.annotations.RouterOperations;
@@ -17,7 +18,6 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
-import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Configuration
@@ -25,25 +25,39 @@ public class TypeLoanRouterRest {
     @Bean
     @RouterOperations({
             @RouterOperation(
-                    path = "/api/v1/tipoPrestamo",
+                    path = "/api/v1/tipoPrestamo/{idTypeLoan}",
                     produces = {MediaType.APPLICATION_JSON_VALUE},
-                    method = RequestMethod.POST,
-                    beanClass = OrderHandler.class,
-                    beanMethod = "getTypeLoan",
+                    method = RequestMethod.GET,
+                    beanClass = TypeLoanHandler.class,
+                    beanMethod = "getByIdTypeLoan",
                     operation = @Operation(
-                            operationId = "getTypeLoan",
-                            summary = "Get type loan",
-                            requestBody = @RequestBody(required = true, content = @Content(schema = @Schema(implementation = OrderRequestDTO.class))),
+                            operationId = "getByIdTypeLoan",
+                            summary = "Get type loan by ID",
+                            parameters = {
+                                    @Parameter(
+                                            name = "idTypeLoan",
+                                            in = ParameterIn.PATH,
+                                            required = true,
+                                            description = "ID of the type loan",
+                                            schema = @Schema(type = "long")
+                                    )
+                            },
                             responses = {
-                                    @ApiResponse(responseCode = "200", description = "Registered order",
-                                            content = @Content(schema = @Schema(implementation = OrderRequestDTO.class))),
-                                    @ApiResponse(responseCode = "400", description = "Invalid request")
+                                    @ApiResponse(
+                                            responseCode = "200",
+                                            description = "Successful response",
+                                            content = @Content(schema = @Schema(implementation = TypeLoanResponseDTO.class))
+                                    ),
+                                    @ApiResponse(
+                                            responseCode = "400",
+                                            description = "Invalid request"
+                                    )
                             }
                     )
             )
     })
-    public RouterFunction<ServerResponse> routerFunction(OrderHandler orderHandler) {
-        return route(GET("/api/v1/all"), orderHandler::getAllOrders)
-                .andRoute(POST("/api/v1/tipoPrestamo"), orderHandler::saveOrderCase);
+    public RouterFunction < ServerResponse > typeLoanRoutes(TypeLoanHandler typeLoanHandler) {
+        return route ( GET ( "/api/v1/tipoPrestamo/all" ), typeLoanHandler::getAllTypeLoan )
+                .andRoute ( GET ( "/api/v1/tipoPrestamo/{idTypeLoan}" ), typeLoanHandler::getByIdTypeLoan );
     }
 }

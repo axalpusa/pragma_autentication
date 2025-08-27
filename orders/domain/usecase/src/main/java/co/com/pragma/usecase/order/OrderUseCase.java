@@ -2,20 +2,22 @@ package co.com.pragma.usecase.order;
 
 import co.com.pragma.model.order.Order;
 import co.com.pragma.model.order.gateways.OrderRepository;
-import co.com.pragma.model.typeloan.TypeLoan;
 import co.com.pragma.model.typeloan.gateways.TypeLoanRepository;
 import co.com.pragma.usecase.order.interfaces.IOrderUseCase;
+import co.com.pragma.usecase.typeloan.interfaces.ITypeLoanUseCase;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
 /**
  * Use case for register a new order
  */
 @AllArgsConstructor
 public class OrderUseCase implements IOrderUseCase {
     private final OrderRepository orderRepository;
-    //private final TypeLoanRepository typeLoanRepository;
+    private final TypeLoanRepository typeLoanRepository;
+    private final ITypeLoanUseCase typeloanUseCase;
+
     /**
      * Validate and register new order.
      *
@@ -23,9 +25,19 @@ public class OrderUseCase implements IOrderUseCase {
      * @return Mono<Order> new order
      */
     @Override
-    public Mono<Order> saveOrder(Order order) {
-        return validateTypeLoad(order)
-                .flatMap(this::saveNewOrder);
+    public Mono < Order > saveOrder(Order order) {
+        return typeLoanRepository.getByIdTypeLoan ( order.getIdTypeLoan ( ).longValue ( ) )
+                .switchIfEmpty ( Mono.error ( new IllegalArgumentException ( "Type loan not found." ) ) )
+                .flatMap ( typeLoan ->
+                        typeloanUseCase.validateTypeLoan ( typeLoan, order.getMount ( ) )
+                                .flatMap ( isValid -> {
+                                    if ( !isValid ) {
+                                        return Mono.error ( new IllegalArgumentException ( "El monto no está dentro del rango permitido" ) );
+                                    }
+                                    order.setIdStatus ( 1 );
+                                    return saveNewOrder ( order );
+                                } )
+                );
     }
 
     /**
@@ -34,17 +46,8 @@ public class OrderUseCase implements IOrderUseCase {
      * @return Flux<Order> get all
      */
     @Override
-    public Flux<Order> getAllOrders() {
-        return orderRepository.findAll();
-    }
-
-    private Mono<Order> validateTypeLoad(Order order) {
-        Mono<TypeLoan> loan = Ma
-        return typeLoanRepository.existByIdTypeLoan(order.getIdTypeLoan().longValue())
-                .flatMap(exists -> exists
-                        ? Mono.just(order)
-                        : Mono.error(new IllegalArgumentException("Type load no exist"))
-                );
+    public Flux < Order > getAllOrders() {
+        return orderRepository.findAll ( );
     }
 
     /**
@@ -53,7 +56,7 @@ public class OrderUseCase implements IOrderUseCase {
      * @param order new order
      * @return Mono<Order> save new order
      */
-    private Mono<Order> saveNewOrder(Order order) {
-        return orderRepository.save(order);
+    private Mono < Order > saveNewOrder(Order order) {
+        return orderRepository.save ( order );
     }
 }

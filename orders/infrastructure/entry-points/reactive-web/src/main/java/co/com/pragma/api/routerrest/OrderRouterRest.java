@@ -42,8 +42,8 @@ public class OrderRouterRest {
                     )
             )
     })
-    public RouterFunction<ServerResponse> routerFunction(OrderHandler orderHandler) {
-        return route(GET("/api/v1/all"), orderHandler::getAllOrders)
+    public RouterFunction<ServerResponse> orderRoutes(OrderHandler orderHandler) {
+        return route(GET("/api/v1/solicitud/all"), orderHandler::getAllOrders)
                 .andRoute(POST("/api/v1/solicitud"), orderHandler::saveOrderCase);
     }
 }

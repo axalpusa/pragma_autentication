@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8091
 spring:
   application:
     name: "Orders"
@@ -20,5 +20,25 @@ management:
     health:
       probes:
         enabled: true
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+adapters:
+  r2dbc:
+    host: "localhost"
+    port: 5432
+    database: "orders"
+    schema: "public"
+    username: "postgres"
+    password: "root"
 cors:
-  allowed-origins: "http://localhost:4200,http://localhost:8080"
+  allowed-origins: "http://localhost:4200,http://localhost:8091"
+logging:
+  level:
+    root: INFO
+  file:
+    name: logs/crediya.log
