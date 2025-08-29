@@ -1,9 +1,9 @@
 package co.com.pragma.api.config;
 
-import co.com.pragma.api.Handler;
-import co.com.pragma.api.RouterRest;
+import co.com.pragma.api.handler.UserHandler;
+import co.com.pragma.api.routerrest.UserRouterRest;
 import co.com.pragma.api.mapper.UserMapperDTO;
-import co.com.pragma.usecase.user.interfaces.IUserUseCase;
+import co.com.pragma.usecase.user.UserUseCase;
 import jakarta.validation.Validator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +16,11 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.mockito.Mockito.mock;
 
-@ContextConfiguration(classes = {RouterRest.class, Handler.class})
+@ContextConfiguration(classes = {UserRouterRest.class, UserHandler.class})
 @WebFluxTest
 @Import({
-        RouterRest.class,
-        Handler.class,
+        UserRouterRest.class,
+        UserHandler.class,
         CorsConfig.class,
         SecurityHeadersConfig.class,
         ConfigTest.MockBeans.class
@@ -33,8 +33,8 @@ class ConfigTest {
     @TestConfiguration
     static class MockBeans {
         @Bean
-        IUserUseCase saveUserUseCase() {
-            return mock ( IUserUseCase.class );
+        UserUseCase saveUserUseCase() {
+            return mock ( UserUseCase.class );
         }
 
         @Bean
