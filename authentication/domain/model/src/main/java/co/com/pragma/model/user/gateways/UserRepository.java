@@ -7,13 +7,14 @@ import reactor.core.publisher.Mono;
 import java.util.UUID;
 
 public interface UserRepository {
-    Mono < User > save(User user);
+    Mono<User> save(User user);
 
-    Mono < User > findById(UUID id);
+    Mono<User> findById(UUID id);
 
-    Mono < User > findByEmailAddress(String emailAddress);
+    Mono<User> findByEmailAddress(String emailAddress);
 
-    Mono < Void > deleteById(UUID id);
+    Mono<Void> deleteById(UUID id);
 
-    Flux < User > findAll();
+    Flux<User> findAll();
+
 }

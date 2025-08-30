@@ -14,6 +14,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,12 +41,14 @@ public class UserRequestDTO {
     LocalDate birthDate;
     String phoneNumber;
 
+    String password;
+
     @NotNull(message = "Base salary is required")
     @DecimalMin(value = "0.0", inclusive = true, message = "The salary cannot be negative")
     @DecimalMax(value = "15000000.0", inclusive = true, message = "The salary cannot be 15M")
     BigDecimal baseSalary;
 
     @NotNull(message = "Rol is required")
-    String idRol;
+    UUID idRol;
 
 }

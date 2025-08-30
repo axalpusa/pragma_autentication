@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,7 +16,7 @@ import java.time.LocalDate;
 @Setter
 @Builder
 public class UserResponseDTO {
-    String idUser;
+    UUID idUser;
     String firstName;
     String lastName;
     String emailAddress;
@@ -24,5 +25,6 @@ public class UserResponseDTO {
     LocalDate birthDate;
     String phoneNumber;
     BigDecimal baseSalary;
-    String idRol;
+    String password;
+    UUID idRol;
 }

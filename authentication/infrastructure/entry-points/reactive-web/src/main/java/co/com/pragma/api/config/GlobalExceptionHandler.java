@@ -13,7 +13,7 @@ import java.util.Map;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    // Manejo para tus validaciones de negocio
+
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity < Map < String, Object > > handleValidationException(ValidationException ex) {
         Map < String, Object > response = new HashMap <> ( );
@@ -23,7 +23,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status ( HttpStatus.BAD_REQUEST ).body ( response );
     }
 
-    // Manejo para argumentos inválidos (ejemplo: UUID malformado)
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity < Map < String, Object > > handleIllegalArgumentException(IllegalArgumentException ex) {
         Map < String, Object > response = new HashMap <> ( );
@@ -32,7 +31,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status ( HttpStatus.BAD_REQUEST ).body ( response );
     }
 
-    // Manejo general para cualquier error no controlado
     @ExceptionHandler(Exception.class)
     public ResponseEntity < Map < String, Object > > handleGenericException(Exception ex) {
         Map < String, Object > response = new HashMap <> ( );

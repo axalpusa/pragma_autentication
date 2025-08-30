@@ -14,7 +14,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class User {
     private UUID idUser;
     private String firstName;
@@ -24,7 +24,7 @@ public class User {
     private String documentId;
     private LocalDate birthDate;
     private String phoneNumber;
+    private String password;
     private BigDecimal baseSalary;
     private UUID idRol;
-
 }

@@ -6,8 +6,7 @@ import org.springframework.context.annotation.FilterType;
 
 @Configuration
 @ComponentScan(basePackages = {
-        "co.com.pragma.usecase",
-        "co.pragma.crediya.usecase"
+        "co.com.pragma.usecase"
 },
         includeFilters = {
                 @ComponentScan.Filter(type = FilterType.REGEX, pattern = "^.+UseCase$")

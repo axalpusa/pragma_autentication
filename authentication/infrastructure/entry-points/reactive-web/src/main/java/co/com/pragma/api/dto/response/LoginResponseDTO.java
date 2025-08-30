@@ -9,8 +9,10 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-public class RolResponseDTO {
+public class LoginResponseDTO {
+    UUID idUser;
     UUID idRol;
     String name;
-    String description;
+    String token;
+
 }

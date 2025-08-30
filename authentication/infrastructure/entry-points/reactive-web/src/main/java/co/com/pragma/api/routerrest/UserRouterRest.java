@@ -11,26 +11,25 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
-@Slf4j
 @Configuration
 @RequiredArgsConstructor
 public class UserRouterRest {
 
     @Bean
-    public RouterFunction < ServerResponse > userRouterFunction(UserHandler handler) {
-        return route ( )
-                .POST ( "/api/v1/users", handler::listenSaveUser )
-                .PUT ( "/api/v1/users", handler::listenUpdateUser )
-                .DELETE ( "/api/v1/users/{idUser}", handler::listenDeleteUser )
-                .GET ( "/api/v1/users/all", handler::listenGetAllUsers )
-                .build ( );
+    public RouterFunction<ServerResponse> userRouterFunction(UserHandler handler) {
+        return route()
+                .POST("/api/v1/users", handler::listenSaveUser)
+                .PUT("/api/v1/users", handler::listenUpdateUser)
+                .DELETE("/api/v1/users/{idUser}", handler::listenDeleteUser)
+                .GET("/api/v1/users/all", handler::listenGetAllUsers)
+                .build();
     }
 
-   @Bean
-    public RouterFunction < ServerResponse > undocumentedUserRouterFunction(UserHandler handler) {
+    @Bean
+    public RouterFunction<ServerResponse> undocumentedUserRouterFunction(UserHandler handler) {
         return RouterFunctions
-                .route ( )
-                .GET ( "/api/v1/users/byId/{idUSer}", handler::listenGetUserById )
-                .build ( );
+                .route()
+                .GET("/api/v1/users/byId/{idUser}", handler::listenGetUserById)
+                .build();
     }
 }
