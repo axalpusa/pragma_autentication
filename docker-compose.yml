@@ -4,15 +4,15 @@ services:
   # Microservicio de Autenticación
   authentication:
     build:
-      context: ./authentication   
+      context: ./authentication
       dockerfile: deployment/Dockerfile
     container_name: authentication-service
     ports:
-      - "8090:8090"  
+      - "${AUTH_PORT}:8090"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db_auth:5432/authentication
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db_auth:5432/${DB_AUTH_NAME}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
     depends_on:
       - db_auth
     networks:
@@ -24,31 +24,31 @@ services:
     container_name: db_auth
     restart: always
     environment:
-      POSTGRES_DB: authentication
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: root
+      POSTGRES_DB: ${DB_AUTH_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - db_auth_data:/var/lib/postgresql/data
     ports:
-      - "5433:5432" 
+      - "${DB_AUTH_PORT}:5432"
     networks:
       - backend
 
   # Microservicio de Orders
   orders:
     build:
-      context: ./orders   
+      context: ./orders
       dockerfile: deployment/Dockerfile
     container_name: orders-service
     ports:
-      - "8091:8091"   
+      - "${ORDERS_PORT}:8091"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db_orders:5432/orders
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db_orders:5432/${DB_ORDERS_NAME}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
     depends_on:
       - db_orders
-      - authentication 
+      - authentication
     networks:
       - backend
 
@@ -58,13 +58,13 @@ services:
     container_name: db_orders
     restart: always
     environment:
-      POSTGRES_DB: orders
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: root
+      POSTGRES_DB: ${DB_ORDERS_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - db_orders_data:/var/lib/postgresql/data
     ports:
-      - "5434:5432"
+      - "${DB_ORDERS_PORT}:5432"
     networks:
       - backend
 
